@@ -1,0 +1,8 @@
+spring.datasource:
+    url: "jdbc:postgresql://localhost:5433/rocketseat-orders"
+    username: rocketseat
+    password: rocketseat
+
+spring:
+  rabbitmq:
+    addresses: "amqp://rocketseat:rocketseat@rabbitmq"

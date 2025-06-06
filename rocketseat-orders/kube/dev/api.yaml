@@ -1,0 +1,8 @@
+port: 8080
+
+env:
+  SPRING_PROFILE: dev
+  DATABASE_HOST: postgresql
+
+livenessProbePath: /actuator/health/liveness
+readinessProbePath: /actuator/health/readiness

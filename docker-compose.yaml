@@ -1,0 +1,39 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: rocketseat
+      RABBITMQ_DEFAULT_PASS: rocketseat
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.127.0
+    ports:
+      - "4317:4317" # grpc
+      - "4318:4318" # http
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    depends_on:
+      - jaeger
+
+  jaeger:
+    image: jaegertracing/jaeger:2.6.0
+    ports:
+      - "16686:16686"
+      # - "4317:4317"
+      # - "4318:4318"
+      - "5778:5778"
+      - "9411:9411"
+
+volumes:
+  rabbitmq_data:
+
+networks:
+  default:
+    external:
+      name: rocketseat-microservices

@@ -1,0 +1,38 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: app/containers/api/Dockerfile.dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - pg
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: app/containers/scheduler/Dockerfile.dev
+    ports:
+      - "8081:8080"
+    depends_on: 
+      - pg
+
+  pg:
+    image: bitnami/postgresql:16
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRESQL_USERNAME: rocketseat
+      POSTGRESQL_PASSWORD: rocketseat
+      POSTGRESQL_POSTGRES_PASSWORD: admin
+      POSTGRESQL_DATABASE: rocketseat-orders
+    volumes:
+      - pg_data:/bitnami/postgresql
+
+volumes:
+  pg_data:
+
+networks:
+  default:
+    external:
+      name: rocketseat-microservices

@@ -1,0 +1,5 @@
+rootProject.name = 'rockeseat-orders'
+
+include ':app:core'
+include ':app:containers:api'
+include ':app:containers:scheduler'

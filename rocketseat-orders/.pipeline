@@ -1,0 +1,56 @@
+services:
+  pgsql_database:
+    image: postgres:16.3
+    image_env_vars:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: rocketseat-orders
+    image_port_map: 5433:5432
+    env_vars:
+      DATABASE_USER: test
+      DATABASE_PASSWORD: test
+      DATABASE_HOST: localhost
+      DATABASE_NAME: rocketseat-orders
+      DATABASE_PORT: 5433
+    output_file: ./db-credentials
+
+steps:
+  install:
+    cmd:
+      - "gradle clean assemble -x bootJar"
+
+  lint:
+    cmd:
+      - "gradle check -x test"
+
+  test:
+    cmd:
+      - "export $(cat ./db-credentials) && gradle test -x bootJar"
+
+  build:
+    cmd:
+      - "gradle bootJar"
+  
+  dev-get-database-credentials:
+    kind: credentials
+    path: database:rocketseat-orders:dev
+    output_file: ./db-credentials
+
+  dev-migrate:
+    kind: database_migration
+    env: dev
+    cmd:
+      - "export $(cat ./db-credentials) && gradle :app:core:flywayMigrate -Dflyway.configFiles=flyway.conf"
+
+  dev-publish-api:
+    kind: publish
+    repo: rocketseat-orders-api
+    dockerfile: app/containers/api/Dockerfile
+    env: dev
+
+  dev-deploy-api:
+    kind: install
+    repo: rocketseat-orders
+    application: rocketseat-orders-api
+    params_file: api.yaml
+    env: dev

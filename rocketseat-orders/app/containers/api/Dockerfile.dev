@@ -1,0 +1,44 @@
+# Stage 1: Cache dependencies to speed up builds
+FROM gradle:8.9-jdk17-alpine AS cache
+
+# Create directory for Gradle cache
+RUN mkdir -p /home/gradle/cache_home
+ENV GRADLE_USER_HOME=/home/gradle/cache_home
+
+# Copy only Gradle build files to cache dependencies
+COPY settings.gradle gradle.properties /home/gradle/java-code/
+COPY app/build.gradle /home/gradle/java-code/app/
+COPY app/containers/build.gradle /home/gradle/java-code/app/containers/
+COPY app/containers/api/build.gradle /home/gradle/java-code/app/containers/api/
+
+WORKDIR /home/gradle/java-code
+
+# Download dependencies without building jar (-x bootJar)
+RUN gradle :app:containers:api:clean :app:containers:api:build -x bootJar --no-daemon
+
+# Stage 2: Build the bootJar
+FROM gradle:8.9-jdk17-alpine AS builder
+
+# Copy Gradle cache from previous stage to speed up builds
+COPY --from=cache /home/gradle/cache_home /home/gradle/.gradle
+
+# Copy full source code
+COPY . /usr/src/java-code/
+WORKDIR /usr/src/java-code
+
+# Build the bootJar of your API module
+RUN gradle :app:containers:api:bootJar --no-daemon
+
+# Stage 3: Run the app with a lightweight JRE image
+FROM eclipse-temurin:17-jdk-alpine
+
+WORKDIR /usr/src/java-app
+
+# Copy the built jar from builder stage
+COPY --from=builder /usr/src/java-code/app/containers/api/build/libs/*.jar ./api.jar
+
+EXPOSE 8080
+
+ENV SPRING_PROFILE=local
+
+CMD ["java", "-jar", "-Dspring.profiles.active=${SPRING_PROFILE}", "api.jar"]
