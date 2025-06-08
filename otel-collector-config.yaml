@@ -17,10 +17,10 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [logging, otlp/jaeger]
+      exporters: [debug, otlp/jaeger]
     metrics:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [debug]
     logs:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [debug]
