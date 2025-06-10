@@ -11,6 +11,10 @@ management:
     health:
         livenessState.enabled: true
         readinessState.enabled: true
+    tracing:
+        sampling:
+            probability: 1.0
+        enabled: true
 
 spring.datasource:
     url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
@@ -19,10 +23,3 @@ spring.datasource:
 
 spring.rabbitmq:
     addresses: "amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}"
-
-otel.exporter.otlp.endpoint: http://otel-collector:4318
-
-# otel:
-#     traces.exporter: otlp
-#     metrics.exporter: otlp
-#     logs.exporter: otlp
