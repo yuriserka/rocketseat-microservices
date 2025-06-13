@@ -1,0 +1,11 @@
+-- Create the table
+CREATE TABLE IF NOT EXISTS customers (
+    id BIGSERIAL PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL
+);
+
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id) REFERENCES customers(id);

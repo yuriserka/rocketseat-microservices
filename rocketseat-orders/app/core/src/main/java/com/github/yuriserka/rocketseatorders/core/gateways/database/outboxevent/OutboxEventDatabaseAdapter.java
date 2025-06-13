@@ -10,9 +10,11 @@ import com.github.yuriserka.rocketseatorders.core.gateways.outbox.EventTypes;
 import com.github.yuriserka.rocketseatorders.core.gateways.outbox.OutboxEventDtoFactory;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OutboxEventDatabaseAdapter {
     private final OutboxEventRepository outboxEventsRepository;
     private final OutboxEventMapper outboxEventMapper;
@@ -27,6 +29,7 @@ public class OutboxEventDatabaseAdapter {
     }
 
     public OutboxEvent save(final OutboxEventDto outboxEvent) {
+        log.info("Saving outbox event: {}", outboxEvent);
         return outboxEventsRepository.save(outboxEventMapper.toEntity(outboxEvent));
     }
 

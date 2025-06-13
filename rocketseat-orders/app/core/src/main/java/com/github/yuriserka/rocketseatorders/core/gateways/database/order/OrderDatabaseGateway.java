@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.github.yuriserka.rocketseatorders.core.entities.customer.Customer;
 import com.github.yuriserka.rocketseatorders.core.entities.order.Order;
 
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,11 @@ import lombok.RequiredArgsConstructor;
 public class OrderDatabaseGateway {
     private final OrderRepository orderRepository;
 
-    public Order createOrderToCustomer(final Long customerId, final BigDecimal amount) {
-        final var order = Order.builder().customerId(customerId).amount(amount).build();
-        return orderRepository.save(order);
+    public Order createOrderToCustomer(final Customer customer, final BigDecimal amount) {
+        return orderRepository.save(Order.builder().customer(customer).amount(amount).build());
     }
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<Order> findAllByCustomerId(final Long customerId) {
+        return orderRepository.findAllByCustomerId(customerId);
     }
 }

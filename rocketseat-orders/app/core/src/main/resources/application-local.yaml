@@ -1,8 +1,10 @@
 spring.datasource:
-    url: "jdbc:postgresql://localhost:5433/rocketseat-orders"
+    url: "jdbc:postgresql://pg:5432/rocketseat-orders"
     username: rocketseat
     password: rocketseat
 
 spring:
   rabbitmq:
     addresses: "amqp://rocketseat:rocketseat@rabbitmq"
+
+otel.exporter.otlp.endpoint: "http://otel-collector:4318"

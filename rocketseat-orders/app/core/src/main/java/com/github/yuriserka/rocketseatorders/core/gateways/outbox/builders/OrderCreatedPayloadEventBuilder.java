@@ -21,7 +21,7 @@ public class OrderCreatedPayloadEventBuilder extends OutboxEventBuilder<OrderCre
         final var order = (Order) args[0];
         return new OrderCreatedPayloadDTO(
             order.getId(),
-            new CustomerOrderInformationDTO(order.getCustomerId()),
+            new CustomerOrderInformationDTO(order.getCustomer().getId(), order.getCustomer().getEmail()),
             order.getAmount()
         );
     }
