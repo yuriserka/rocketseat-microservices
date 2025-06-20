@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.yuriserka.rocketseatorders.core.entities.outboxevent.OutboxEvent;
 
 public record EmittedEvent(
-        Long id,
-        @JsonProperty("event_id") String eventId,
-        @JsonProperty("event_type") String eventType,
-        JsonNode payload,
-        @JsonProperty("created_at") LocalDateTime createdAt
+    Long id,
+    @JsonProperty("event_id") String eventId,
+    @JsonProperty("event_type") String eventType,
+    JsonNode payload,
+    @JsonProperty("created_at") LocalDateTime createdAt
 ) {
     public EmittedEvent(final OutboxEvent event) {
         this(

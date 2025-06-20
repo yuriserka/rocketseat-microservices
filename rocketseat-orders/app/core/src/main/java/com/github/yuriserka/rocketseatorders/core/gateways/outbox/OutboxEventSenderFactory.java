@@ -20,7 +20,7 @@ public class OutboxEventSenderFactory {
         final RabbitTemplate  rabbitTemplate
     ) {
         this.kafkaBrokerEventSender = new KafkaBrokerEventSender(objectMapper, kafkaTemplate);
-        this.rabbitMqBrokerEventSender = new RabbitMQBrokerEventSender(objectMapper, rabbitTemplate);
+        this.rabbitMqBrokerEventSender = new RabbitMQBrokerEventSender(rabbitTemplate);
     }
 
     public MessageBrokerEventSender create(final OutboxEvent outboxEvent) {

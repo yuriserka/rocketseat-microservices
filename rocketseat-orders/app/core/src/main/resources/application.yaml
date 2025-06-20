@@ -24,4 +24,6 @@ spring.datasource:
 spring.rabbitmq:
     addresses: "amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}"
 
-otel.exporter.otlp.endpoint: "http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT}"
+otel:
+    exporter.otlp.endpoint: "http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT}"
+    instrumentation.micrometer.enabled: true
