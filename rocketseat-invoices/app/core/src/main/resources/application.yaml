@@ -1,0 +1,29 @@
+spring.profiles.active: local
+
+server:
+    address: 0.0.0.0
+    port: 8080
+    shutdown: graceful
+
+management:
+    endpoints.web.exposure.include: ["health", "info", "prometheus"]
+    endpoint.health.probes.enabled: true
+    health:
+        livenessState.enabled: true
+        readinessState.enabled: true
+    tracing:
+        sampling:
+            probability: 1.0
+        enabled: true
+
+spring.rabbitmq:
+    addresses: "amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}"
+
+otel:
+    exporter.otlp.endpoint: "http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT}"
+    instrumentation.micrometer.enabled: true
+
+rocketseatinvoices.rabbitmq:
+    orders:
+        queue: "orders"
+        exchange: "orders"

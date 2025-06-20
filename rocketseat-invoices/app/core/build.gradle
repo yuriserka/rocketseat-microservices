@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.flywaydb:flyway-database-postgresql:${flywayVersion}")
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "${flywayVersion}"
+}
+
+jar {
+	enabled = true
+}
+
+bootJar {
+	enabled = false
+}
+
+dependencies {
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}

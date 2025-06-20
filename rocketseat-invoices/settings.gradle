@@ -1,0 +1,4 @@
+rootProject.name = 'rockeseat-invoices'
+
+include ':app:core'
+include ':app:containers:worker'

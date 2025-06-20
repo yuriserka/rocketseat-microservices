@@ -1,0 +1,4 @@
+spring.rabbitmq:
+  addresses: "amqp://rocketseat:rocketseat@rabbitmq"
+
+otel.exporter.otlp.endpoint: "http://otel-collector:4318"

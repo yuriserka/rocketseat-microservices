@@ -1,0 +1,12 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: app/containers/worker/Dockerfile.dev
+    ports:
+      - "8083:8080"
+
+networks:
+  default:
+    external:
+      name: rocketseat-microservices
