@@ -76,7 +76,7 @@ subprojects {
 
         implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
 
-        implementation "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter:${otelVersion}"
+        implementation "io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:${otelVersion}"
         runtimeOnly "io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:${otelVersion}-alpha"
     }
 }

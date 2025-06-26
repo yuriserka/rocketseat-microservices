@@ -76,7 +76,6 @@ subprojects {
 
         implementation "org.springframework.kafka:spring-kafka:${springKafkaVersion}"
 
-        implementation "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter:${otelVersion}"
         runtimeOnly "io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:${otelVersion}-alpha"
     }
 }
